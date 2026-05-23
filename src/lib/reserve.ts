@@ -33,7 +33,7 @@ export async function createReservation(
   const { inventoryId, quantity, sessionId, idempotencyKey } = params;
 
   // 1. Idempotency check — return cached result if this key was already processed
-  if (idempotencyKey) {
+  if (idempotencyKey && redis) {
     const cached = await redis.get<ReserveResult>(
       `idempotency:${idempotencyKey}`
     );
@@ -90,7 +90,7 @@ export async function createReservation(
     const result: ReserveResult = { success: true, reservation };
 
     // Cache result for idempotency
-    if (idempotencyKey) {
+    if (idempotencyKey && redis) {
       await redis.set(`idempotency:${idempotencyKey}`, result, {
         ex: IDEMPOTENCY_TTL_SECONDS,
       });
