@@ -1,7 +1,7 @@
 # Allo Health — Inventory Reservation System
 
 **Live:** [allohealth-psi.vercel.app](https://allohealth-psi.vercel.app)  
-**Stack:** Next.js 14 · TypeScript · Prisma 5 · Supabase Postgres · Upstash Redis · shadcn/ui · Zod · Tailwind CSS  
+**Stack:** Next.js 14 · TypeScript · Prisma 5 · Supabase Postgres · Upstash Redis · shadcn/ui · Magic UI · Zod · Tailwind CSS  
 **Deployed on:** Vercel
 
 ---
@@ -107,6 +107,24 @@ Clients can send an `Idempotency-Key` header with reservation requests to preven
 3. Different keys always create independent reservations
 
 This is particularly important in mobile and unreliable network environments where POST requests may be retried by the HTTP client without the user's knowledge.
+
+---
+
+## UI & Design
+
+The frontend is designed for quiet confidence — generous whitespace, soft shadows, and no aggressive colors. The aesthetic draws from tools like Stripe and Linear.
+
+**Key design decisions:**
+
+- **Typography:** Inter (body) + Geist Mono (code/SKUs) via `next/font/google` for zero layout shift
+- **Layout:** Off-white `#fafafa` background, pure white cards with `rounded-2xl` and `border-slate-100`
+- **Magic UI components:**
+  - `AnimatedGradientText` — hero heading with a subtle animated gradient sweep
+  - `BorderBeam` — animated light beam tracing each product card's border
+  - `NumberTicker` — stock counts animate in with a rolling number effect
+  - `ShimmerButton` — violet shimmer effect on reserve buttons, replaces standard buttons
+- **Stock indicators:** Color-coded pill badges (emerald >2, amber ≤2, red = 0) with consistent `rounded-full` treatment
+- **Server component:** The product page is a server component with `export const dynamic = "force-dynamic"` to ensure stock counts are never stale
 
 ---
 
