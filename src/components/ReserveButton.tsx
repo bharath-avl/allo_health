@@ -86,6 +86,7 @@ export function ReserveButton({
       if (res.ok) {
         const reservation = await res.json();
         toast.success(`Reserved 1× ${productName}!`);
+        router.refresh();
         router.push(`/checkout/${reservation.id}`);
       } else if (res.status === 409) {
         toast.error("Sorry, just sold out! 😔");
