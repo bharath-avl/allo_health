@@ -13,6 +13,42 @@ interface ReserveButtonProps {
   productName: string;
 }
 
+export function StockBadge({ availableUnits }: { availableUnits: number }) {
+  if (availableUnits === 0) {
+    return (
+      <Badge
+        variant="outline"
+        className="border-red-200 bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-600"
+      >
+        <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-red-400" />
+        Sold out
+      </Badge>
+    );
+  }
+
+  if (availableUnits <= 2) {
+    return (
+      <Badge
+        variant="outline"
+        className="border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700"
+      >
+        <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
+        {availableUnits} left
+      </Badge>
+    );
+  }
+
+  return (
+    <Badge
+      variant="outline"
+      className="border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700"
+    >
+      <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+      {availableUnits} left
+    </Badge>
+  );
+}
+
 export function ReserveButton({
   inventoryId,
   availableUnits,
@@ -23,13 +59,17 @@ export function ReserveButton({
 
   if (availableUnits === 0) {
     return (
-      <Badge
-        variant="outline"
-        className="border-red-200 bg-red-50 px-3 py-1 text-red-600"
-      >
-        <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-red-500" />
-        Out of Stock
-      </Badge>
+      <div className="mt-2 space-y-2">
+        <div className="flex items-center justify-between">
+          <StockBadge availableUnits={0} />
+        </div>
+        <Button
+          disabled
+          className="h-10 w-full rounded-xl bg-slate-100 text-sm font-medium text-slate-400 cursor-not-allowed"
+        >
+          Out of Stock
+        </Button>
+      </div>
     );
   }
 
@@ -61,34 +101,15 @@ export function ReserveButton({
   };
 
   return (
-    <div className="flex items-center gap-2.5">
-      <Badge
-        variant="outline"
-        className={
-          availableUnits <= 2
-            ? "border-amber-200 bg-amber-50 px-3 py-1 text-amber-700"
-            : "border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-700"
-        }
-      >
-        <span
-          className={`mr-1.5 inline-block h-1.5 w-1.5 rounded-full ${
-            availableUnits <= 2 ? "bg-amber-500" : "bg-emerald-500"
-          }`}
-        />
-        {availableUnits} left
-      </Badge>
-      <Button
-        size="sm"
-        onClick={handleReserve}
-        disabled={isLoading}
-        className="cursor-pointer bg-purple-600 text-white hover:bg-purple-700"
-      >
-        {isLoading ? (
-          <Loader2 className="h-4 w-4 animate-spin text-white" />
-        ) : (
-          "Reserve"
-        )}
-      </Button>
-    </div>
+    <Button
+      onClick={handleReserve}
+      disabled={isLoading}
+      className="h-10 w-full cursor-pointer rounded-xl bg-indigo-600 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-60"
+    >
+      {isLoading ? (
+        <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" />
+      ) : null}
+      {isLoading ? "Reserving…" : "Reserve · 10 min hold"}
+    </Button>
   );
 }
