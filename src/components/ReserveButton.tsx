@@ -110,7 +110,7 @@ export function ReserveButton({
       {isLoading ? (
         <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" />
       ) : null}
-      {isLoading ? "Reserving…" : "Reserve · 10 min hold"}
+      {isLoading ? "Reserving…" : "Reserve"}
     </Button>
   );
 }

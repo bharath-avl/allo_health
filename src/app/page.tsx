@@ -4,6 +4,8 @@ import { Separator } from "@/components/ui/separator";
 import { ReserveButton, StockBadge } from "@/components/ReserveButton";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 // SKU → accent color + emoji
 const SKU_CONFIG: Record<string, { border: string; bg: string; emoji: string }> = {
   "WH-001": { border: "border-l-indigo-500", bg: "bg-indigo-50", emoji: "🎧" },
@@ -76,17 +78,12 @@ export default async function Home() {
           </div>
 
           {/* Right side indicators */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
-              <span className="text-xs font-medium text-emerald-400">Live</span>
-            </div>
-            <Badge className="border-0 bg-slate-800 px-2.5 py-1 text-[10px] font-medium text-slate-400 hover:bg-slate-800">
-              10 min hold
-            </Badge>
+          <div className="flex items-center gap-1.5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            <span className="text-xs font-medium text-emerald-400">Live</span>
           </div>
         </div>
       </nav>
@@ -97,7 +94,7 @@ export default async function Home() {
           Reserve before someone else does
         </h1>
         <p className="mx-auto mt-3 max-w-lg text-base text-slate-500">
-          Units are held for 10 minutes at checkout. First come, first served.
+          Real-time stock tracking. First come, first served.
         </p>
         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400">
           <span>{totalProducts} Products</span>
